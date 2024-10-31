@@ -29,3 +29,4 @@ linter:
 analyzer:
   plugins:
     - custom_lint
+    - invalid_annotation_target: ignore

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'data_from_net.g.dart';
@@ -13,7 +12,6 @@ class MyRiverData {
 }
 
 class DataRepository {
-
   List<MyRiverData> getDataList() {
     List<MyRiverData> datas = [];
     for (int i = 0; i < 10; i++) {
@@ -31,9 +29,7 @@ abstract class MyAPI {
   Future<String> goToHome();
 }
 
-void get(){
-  var client= MyAPI(Dio());
-  client.goToHome().then((item)=>{
-
-  });
+void get() {
+  var client = MyAPI(Dio());
+  client.goToHome().then((item) => {});
 }

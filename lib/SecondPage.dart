@@ -16,18 +16,20 @@ class _SecondState extends ConsumerState<ConsumerStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         width: 1460,
         height: 780,
         decoration: const BoxDecoration(
           color: Colors.cyan,
-          image: DecorationImage(image: NetworkImage('https://picsum.photos/250?image=9'),
-            alignment: Alignment.topCenter,
-            fit: BoxFit.fill
-          ),
+          image: DecorationImage(
+              image: NetworkImage('https://picsum.photos/250?image=9'),
+              alignment: Alignment.topCenter,
+              fit: BoxFit.fill),
         ),
         child: Column(
-          children: [ElevatedButton(onPressed: onPressed, child: const Text("back"))],
+          children: [
+            ElevatedButton(onPressed: onPressed, child: const Text("back")),
+          ],
         ),
       ),
     );
