@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as html_parser;
 import 'package:my_flutter_demo/log_print.dart';
@@ -39,12 +37,13 @@ class ImageData {
 
 mixin Parent on ImageData {
   String name = "Parent";
+
   void printName() {
     myLog(name);
   }
 }
 
-class Child extends ImageData  with Parent {
+class Child extends ImageData with Parent {
   Child(super.href, super.src, super.alt);
 
   void show() {

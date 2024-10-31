@@ -1,8 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:my_flutter_demo/customizeWidget/cutter_view.dart';
-import 'package:my_flutter_demo/my_html_parser.dart';
+import 'package:my_flutter_demo/dart_lang_test/my_html_parser.dart';
 
 /// 1.Flutter为什么要区分StatelessWidget和StatefulWidget
 /// 答：通过区分这两种类型的Widget，Flutter能够更高效地管理UI的构建和更新，从而提升应用的性能和响应速度
