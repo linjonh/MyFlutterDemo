@@ -10,9 +10,7 @@ class Home {
   }
 }
 
-class MyCanvas extends MyData
-    with Write, Read
-    implements Home, AbsListener, IOnClick, AbsInterface, RecordNode, UploadNode, ProcessNode {
+class MyCanvas extends MyData with Write, Read implements Home, AbsListener, IOnClick, AbsInterface, RecordNode, UploadNode, ProcessNode {
   MyCanvas(super.name, super.age) {
     nameWrite = "draw a rectangle";
     nameRead = "circle";

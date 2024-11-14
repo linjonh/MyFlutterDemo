@@ -10,7 +10,6 @@ base class ExampleBaseClass {
  * because the supertype 'ExampleBaseClass' is 'base'
  */
 final class Subclass extends ExampleBaseClass {
-
   void printSuperFiled() {
     print("$_privateFieds");
   }
@@ -18,7 +17,7 @@ final class Subclass extends ExampleBaseClass {
 
 base class ThirdClass extends Subclass {
   @override
-  var _privateFieds="ThirdClass";
+  var _privateFieds = "ThirdClass";
 
   void toPrintString() {
     print("$_privateFieds");

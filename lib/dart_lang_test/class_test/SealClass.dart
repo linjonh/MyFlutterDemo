@@ -6,12 +6,12 @@ mixin MyNode {
   var vName = "MyNode";
 }
 
-class RecordNode extends BaseNode with MyNode implements AbsListener{
+class RecordNode extends BaseNode with MyNode implements AbsListener {
   @override
   String? absFields;
 
   @override
-  String nameAbs="RecordNode";
+  String nameAbs = "RecordNode";
 
   @override
   void doAction() {
