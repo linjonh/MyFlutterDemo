@@ -15,4 +15,13 @@
     <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
         <item name="android:windowBackground">?android:colorBackground</item>
     </style>
+
+    <style name="Theme.App.starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white_gray</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <!-- Required for animated icons. -->
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <!-- Set the theme of the Activity that directly follows your splash screen. This is required. -->
+        <item name="postSplashScreenTheme">@style/LaunchTheme</item>
+    </style>
 </resources>

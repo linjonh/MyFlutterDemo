@@ -9,7 +9,7 @@ android {
     namespace = "com.jaysen.demo.my_flutter_demo"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
-
+    println("compileSdk=$compileSdk ndkVersion=$ndkVersion")
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -28,6 +28,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        println("minSdk=${minSdk} targetSdk=$targetSdk versionCode=$versionCode versionName=$versionName")
     }
 
     buildTypes {
@@ -41,4 +42,7 @@ android {
 
 flutter {
     source = "../.."
+}
+dependencies {
+    implementation 'androidx.core:core-splashscreen:1.0.1'
 }
