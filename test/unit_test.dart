@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_flutter_demo/dart_lang_test/my_html_parser.dart';
+import 'package:my_flutter_demo/log_print.dart';
+import 'package:my_flutter_demo/third_libs/provider_test/provider_test.dart';
 
 bool topLevel = true;
 
@@ -30,6 +32,17 @@ void main() async {
   test(" test other mixin", () {
     Child("hh", "ss", "sf").show();
     myFunction();
+  });
+
+  test("test provider",(){
+    var cart = CartModel();
+    cart.addListener(() {
+      myLog("cart changed=${cart.items.length}");
+    });
+
+    for (var i = 0; i < 10; ++i) {
+      cart.add(Item());
+    }
   });
 
 }

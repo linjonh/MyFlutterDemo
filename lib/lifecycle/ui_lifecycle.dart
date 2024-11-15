@@ -71,6 +71,14 @@ abstract class MyCommonLogWidgetState<T extends StatefulWidget> extends State<T>
         // TODO: Handle this case.
         break;
     }
+    // paused的过程
+    // I/flutter ( 7333): didChangeAppLifecycleState state=AppLifecycleState.inactive
+    // I/flutter ( 7333): didChangeAppLifecycleState state=AppLifecycleState.hidden
+    // I/flutter ( 7333): didChangeAppLifecycleState state=AppLifecycleState.paused
+    // resume的过程
+    // I/flutter ( 7333): didChangeAppLifecycleState state=AppLifecycleState.hidden
+    // I/flutter ( 7333): didChangeAppLifecycleState state=AppLifecycleState.inactive
+    // I/flutter ( 7333): didChangeAppLifecycleState state=AppLifecycleState.resumed
   }
 }
 
