@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_demo/log_print.dart';
 
 class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return MyWidgetState();
@@ -85,7 +87,7 @@ abstract class MyCommonLogWidgetState<T extends StatefulWidget> extends State<T>
 class MyWidgetState extends MyCommonLogWidgetState<MyWidget> {
   @override
   Widget build(BuildContext context) {
-    return Text("demo");
+    return const Text("demo");
   }
 }
 

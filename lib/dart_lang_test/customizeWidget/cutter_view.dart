@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 /// 创建一个时间轴的自定义控件
 ///
 class CutterView extends StatefulWidget {
+  const CutterView({super.key});
+
   @override
   State<StatefulWidget> createState() => _CutterView();
 }

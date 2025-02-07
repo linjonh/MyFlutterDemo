@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-// part 'RunningState.g.dart';
+// part 'running_state.g.dart';
 ///不好使，不会自动生成
 @JsonEnum(valueField: "status", fieldRename: FieldRename.kebab)
 enum RunningState {

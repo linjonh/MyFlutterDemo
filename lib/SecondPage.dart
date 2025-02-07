@@ -20,9 +20,9 @@ class _SecondState extends ConsumerState<ConsumerStatefulWidget> {
         builder: (context, cart, child) => Stack(
               children: [
                 if (child != null) child,
-                Align(alignment:Alignment(0.5,0.7),child: ElevatedButton(onPressed: () => {cart.add(Item())}, child: const Text("cart add"))),
+                Align(alignment:const Alignment(0.5,0.7),child: ElevatedButton(onPressed: () => {cart.add(Item())}, child: const Text("cart add"))),
                 Center(
-                  child: Text(style: TextStyle().copyWith(fontSize: 20),"stack place holder cart=${cart.items.length}"),
+                  child: Text(style: const TextStyle().copyWith(fontSize: 20),"stack place holder cart=${cart.items.length}"),
                 )
               ],
             ),

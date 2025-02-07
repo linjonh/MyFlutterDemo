@@ -42,7 +42,7 @@ class _MyTestHomePageState extends State<StatefulWidget> {
   var demoText = "demo text";
   var checked = false;
   var content = "empty";
-  List<ImageData>? imageDatas = null;
+  List<ImageData>? imageDatas;
 
   void changeData(String str, bool checked) {
     setState(() {
@@ -65,7 +65,7 @@ class _MyTestHomePageState extends State<StatefulWidget> {
         });
       }
     } catch (e) {
-      print("出现错误了:" + e.toString());
+      print("出现错误了:$e");
       setState(() {
         content = e.toString();
       });

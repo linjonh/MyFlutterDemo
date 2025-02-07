@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'Person.g.dart';//需要声明part 文件生成路径，然后调用dart run build_runner build 才会生成自动生成文件
+part 'person.g.dart';//需要声明part 文件生成路径，然后调用dart run build_runner build 才会生成自动生成文件
 @JsonSerializable()
 class Person {
   String? firstName;
