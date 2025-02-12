@@ -16,7 +16,7 @@ List<ImageData>? parseImageUrl(Document doc) {
       var href = item.querySelector("a")?.attributes["href"];
       myLog("href=$href");
       var imageEl = item.querySelector("img");
-      var src = imageEl?.attributes["src"];
+      var src = imageEl?.attributes["data-src"];
       var alt = imageEl?.attributes["alt"];
       myLog("src=$src alt=$alt");
       list.add(ImageData(href, src, alt));

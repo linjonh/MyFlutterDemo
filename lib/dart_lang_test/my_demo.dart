@@ -74,18 +74,27 @@ class _MyTestHomePageState extends State<StatefulWidget> {
 
   Widget getList() {
     if (imageDatas != null) {
-      return ListView.builder(
+      return GridView.builder(
+          // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.7),
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 510,childAspectRatio:0.7,mainAxisSpacing: 10,crossAxisSpacing: 10),
           itemBuilder: (context, index) {
             var imageData = imageDatas?[index];
             var src2 = imageData?.src ?? "";
-            return Center(
-              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(
-                  imageData?.alt ?? "",
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                loadImage(src2),
-              ]),
+            return Container(
+              color: Colors.cyan,
+              // decoration: BoxDecoration(image: const AssetImage("")),
+              margin: const EdgeInsets.all(10),
+              child: Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        imageData?.alt ?? "",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      loadImage(src2),
+                    ]),
+              ),
             );
           },
           itemCount: imageDatas!.length);
@@ -98,20 +107,17 @@ class _MyTestHomePageState extends State<StatefulWidget> {
     var future = await http.get(parse, headers: httpHeaders());
     if (future.statusCode == 200) {
       print(" load success");
-    }else{
+    } else {
       print(" load error :${future.statusCode} ${future.reasonPhrase}");
     }
-
   }
 
   CachedNetworkImage loadImage(String src2) {
-    loadImageNet(src2);
+    // loadImageNet(src2);
     return CachedNetworkImage(
       // imageUrl: "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1qfLPZ.img?w=584&h=328&m=6",
       imageUrl: src2,
       httpHeaders: httpHeaders(),
-      width: 100,
-      height: 100,
     );
   }
 
@@ -126,14 +132,16 @@ class _MyTestHomePageState extends State<StatefulWidget> {
       "user-agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
       "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7",
-      "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "accept":
+          "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
       "accept-encoding": "gzip, deflate, br, zstd",
-      "sec-fetch-dest": "image",
-      "sec-fetch-mode": "no-cors",
-      "sec-fetch-site": "cross-site",
-      "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": "\"Windows\"",
+      // "sec-fetch-dest": "image",
+      // "sec-fetch-mode": "no-cors",
+      // "sec-fetch-site": "cross-site",
+      // "sec-ch-ua":
+      //     "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+      // "sec-ch-ua-mobile": "?0",
+      // "sec-ch-ua-platform": "\"Windows\"",
     };
   }
 

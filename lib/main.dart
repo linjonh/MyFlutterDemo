@@ -2,6 +2,7 @@ import 'package:clipboard_watcher/clipboard_watcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_flutter_demo/dart_lang_test/my_demo.dart';
 import 'package:my_flutter_demo/third_libs/provider_test/provider_test.dart';
 import 'package:provider/provider.dart' as pd;
 import 'package:my_flutter_demo/MyNavi.dart';
@@ -27,7 +28,8 @@ DataRepository getMyDataList(Ref ref) {
 
 void main() {
   runApp(const ProviderScope(
-    child: MyApp(),
+    // child: MyApp(),
+    child: MyTestApp(title: "test",),
   ));
 }
 
