@@ -149,6 +149,7 @@ class Worker2 {
     _commands.send((id, message));
     return await completer.future.catchError((e){
       print(e);
+      return null;
     });
   }
 

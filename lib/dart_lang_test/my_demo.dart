@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_flutter_demo/dart_lang_test/my_html_parser.dart';
+import 'package:my_flutter_demo/log_print.dart';
 
 /// 1.Flutter为什么要区分StatelessWidget和StatefulWidget
 /// 答：通过区分这两种类型的Widget，Flutter能够更高效地管理UI的构建和更新，从而提升应用的性能和响应速度
@@ -51,11 +52,11 @@ class _MyTestHomePageState extends State<StatefulWidget> {
     });
   }
 
-  loadHttp() async {
+  void loadHttp() async {
     try {
       var url = Uri.https("meirentu.cc");
       var future = await http.get(url);
-      print("body=${future.statusCode}");
+      myLog("body=${future.statusCode}");
       if (future.statusCode == 200) {
         setState(() {
           var doc = parseHtml(future.body);
@@ -65,7 +66,7 @@ class _MyTestHomePageState extends State<StatefulWidget> {
         });
       }
     } catch (e) {
-      print("出现错误了:$e");
+      myLog("出现错误了:$e");
       setState(() {
         content = e.toString();
       });
@@ -75,40 +76,47 @@ class _MyTestHomePageState extends State<StatefulWidget> {
   Widget getList() {
     if (imageDatas != null) {
       return GridView.builder(
-          // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.7),
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 510,childAspectRatio:0.7,mainAxisSpacing: 10,crossAxisSpacing: 10),
-          itemBuilder: (context, index) {
-            var imageData = imageDatas?[index];
-            var src2 = imageData?.src ?? "";
-            return Container(
-              color: Colors.cyan,
-              // decoration: BoxDecoration(image: const AssetImage("")),
-              margin: const EdgeInsets.all(10),
-              child: Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        imageData?.alt ?? "",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      loadImage(src2),
-                    ]),
+        // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.7),
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 510,
+          childAspectRatio: 0.7,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
+        itemBuilder: (context, index) {
+          var imageData = imageDatas?[index];
+          var src2 = imageData?.src ?? "";
+          return Container(
+            color: Colors.cyan,
+            // decoration: BoxDecoration(image: const AssetImage("")),
+            margin: const EdgeInsets.all(10),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    imageData?.alt ?? "",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  loadImage(src2),
+                ],
               ),
-            );
-          },
-          itemCount: imageDatas!.length);
+            ),
+          );
+        },
+        itemCount: imageDatas!.length,
+      );
     }
     return const Text("empty");
   }
 
-  loadImageNet(String src2) async {
+  void loadImageNet(String src2) async {
     var parse = Uri.parse(src2);
     var future = await http.get(parse, headers: httpHeaders());
     if (future.statusCode == 200) {
-      print(" load success");
+      myLog(" load success");
     } else {
-      print(" load error :${future.statusCode} ${future.reasonPhrase}");
+      myLog(" load error :${future.statusCode} ${future.reasonPhrase}");
     }
   }
 

@@ -1,20 +1,22 @@
+import 'package:my_flutter_demo/log_print.dart';
+
 void testSwitch() {
   List<int> obj = [1, 2];
   // obj.add(3);
   switch (obj) {
     case const [1, 4]:
-      print("");
+      myLog("");
     case const [1, 2]:
-      print("const equals");
+      myLog("const equals");
     case  [1, 2]:
-      print("equals ：not const list ");
+      myLog("equals ：not const list ");
     default:
-      print("not equals");
+      myLog("not equals");
   }
 }
 
 (int,String) testRecords(param){
- print(param.runtimeType);
+ myLog(param.runtimeType);
  return switch (param){
        1=>(1,"1"),
       _=>(-1,"no result")

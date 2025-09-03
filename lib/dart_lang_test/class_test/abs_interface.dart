@@ -1,7 +1,9 @@
+import 'package:my_flutter_demo/log_print.dart';
+
 abstract interface class AbsInterface {
   String absInterField = "absInterField";
 
   void helloWorld() {
-    print("hello abs interface");
+    myLog("hello abs interface");
   }
 }

@@ -2,15 +2,21 @@
 
 A new Flutter project.
 
-## Getting Started
+## 生成代码命令
 
-This project is a starting point for a Flutter application.
+类似 main.g.dart的生成命令
 
-A few resources to get you started if this is your first Flutter project:
+```sh
+flutter pub run build_runner build
+```
+或者
+```sh
+# 或者持续监听文件变化：
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+flutter pub run build_runner watch
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+清理
+```sh
+flutter pub run build_runner clean
+```

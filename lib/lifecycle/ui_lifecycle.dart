@@ -25,6 +25,7 @@ abstract class MyCommonLogWidgetState<T extends StatefulWidget> extends State<T>
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
     myLog("didChangeDependencies mounted=$mounted");
   }
 
@@ -38,21 +39,25 @@ abstract class MyCommonLogWidgetState<T extends StatefulWidget> extends State<T>
 
   @override
   void activate() {
+    super.activate();
     myLog("activate mounted=$mounted");
   }
 
   @override
   void deactivate() {
+    super.deactivate();
     myLog("deactivate mounted=$mounted");
   }
 
   @override
   void reassemble() {
+    super.reassemble();
     myLog("reassemble mounted=$mounted");
   }
 
   @override
   void didUpdateWidget(T oldWidget) {
+    super.didUpdateWidget(oldWidget);
     myLog("didUpdateWidget mounted=$mounted");
   }
 
