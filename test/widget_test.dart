@@ -9,9 +9,9 @@ import 'dart:convert' as convert;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:my_flutter_demo/dart_lang_test/class_test/IOnClick.dart';
-import 'package:my_flutter_demo/dart_lang_test/class_test/MyCanvas.dart';
-import 'package:my_flutter_demo/dart_lang_test/class_test/SealClass.dart';
+import 'package:my_flutter_demo/dart_lang_test/class_test/ion_click.dart';
+import 'package:my_flutter_demo/dart_lang_test/class_test/my_canvas.dart';
+import 'package:my_flutter_demo/dart_lang_test/class_test/seal_class.dart';
 
 //basic enum
 enum MyState { start, working, end, trans }

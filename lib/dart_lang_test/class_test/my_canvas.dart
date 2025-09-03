@@ -1,8 +1,8 @@
-import 'AbsInterface.dart';
-import 'AbsListener.dart';
-import 'IOnClick.dart';
-import 'MyData.dart';
-import 'SealClass.dart';
+import 'abs_interface.dart';
+import 'abs_listener.dart';
+import 'ion_click.dart';
+import 'my_data.dart';
+import 'seal_class.dart';
 
 class Home {
   void showHome() {
