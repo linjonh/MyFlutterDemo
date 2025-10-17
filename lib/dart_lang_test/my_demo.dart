@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_flutter_demo/dart_lang_test/my_html_parser.dart';
 import 'package:my_flutter_demo/log_print.dart';
@@ -16,10 +19,8 @@ class MyTestApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "我的一个Flutter demo，是一个无状态的widget:$title",
-      home: const MyTestHomePage(),
-      theme: ThemeData(useMaterial3: true),
+    return SafeArea(
+      child: MaterialApp(title: "我的一个Flutter demo，是一个无状态的widget:$title", home: const MyTestHomePage(), theme: ThemeData(useMaterial3: true)),
     );
   }
 }
@@ -58,8 +59,8 @@ class _MyTestHomePageState extends State<StatefulWidget> {
       var future = await http.get(url);
       myLog("body=${future.statusCode}");
       if (future.statusCode == 200) {
+        var doc = parseHtml(future.body);
         setState(() {
-          var doc = parseHtml(future.body);
           imageDatas = parseImageUrl(doc);
           var str = doc.querySelector("title")?.text;
           content = str ?? "empty";
@@ -75,36 +76,48 @@ class _MyTestHomePageState extends State<StatefulWidget> {
 
   Widget getList() {
     if (imageDatas != null) {
-      return GridView.builder(
-        // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.7),
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 510,
-          childAspectRatio: 0.7,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-        ),
-        itemBuilder: (context, index) {
-          var imageData = imageDatas?[index];
-          var src2 = imageData?.src ?? "";
-          return Container(
-            color: Colors.cyan,
-            // decoration: BoxDecoration(image: const AssetImage("")),
-            margin: const EdgeInsets.all(10),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    imageData?.alt ?? "",
-                    style: Theme.of(context).textTheme.titleMedium,
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          return GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: constraints.maxWidth < 400
+                ? const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.7, mainAxisSpacing: 0, crossAxisSpacing: 0)
+                : const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 300, childAspectRatio: 0.7, mainAxisSpacing: 0, crossAxisSpacing: 0),
+            itemBuilder: (context, index) {
+              var imageData = imageDatas?[index];
+              var src2 = imageData?.src ?? "";
+              return Card(
+                clipBehavior: Clip.antiAlias, // ✅ 确保圆角裁剪生效
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                child: InkWell(
+                  onTap: () {
+                    //click
+                    print("click ${imageData?.href}");
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(imageUrl: imageData!.href!)));
+                  },
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      loadImage(src2),
+                      Container(
+                        color: Colors.black45,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(4),
+                        height: 30,
+                        child: Text(
+                          imageData?.alt ?? "",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white, fontSize: 14),
+                        ),
+                      ),
+                    ],
                   ),
-                  loadImage(src2),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
+            itemCount: imageDatas!.length,
           );
         },
-        itemCount: imageDatas!.length,
       );
     }
     return const Text("empty");
@@ -120,39 +133,6 @@ class _MyTestHomePageState extends State<StatefulWidget> {
     }
   }
 
-  CachedNetworkImage loadImage(String src2) {
-    // loadImageNet(src2);
-    return CachedNetworkImage(
-      // imageUrl: "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1qfLPZ.img?w=584&h=328&m=6",
-      imageUrl: src2,
-      httpHeaders: httpHeaders(),
-    );
-  }
-
-  Map<String, String> httpHeaders() {
-    return const {
-      "dnt": "1",
-      "method": "GET",
-      "pragma": "no-cache",
-      "cache-control": "no-cache",
-      "priority": "u=1, i",
-      "referer": "https://meirentu.cc/",
-      "user-agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-      "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7",
-      "accept":
-          "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-      "accept-encoding": "gzip, deflate, br, zstd",
-      // "sec-fetch-dest": "image",
-      // "sec-fetch-mode": "no-cors",
-      // "sec-fetch-site": "cross-site",
-      // "sec-ch-ua":
-      //     "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
-      // "sec-ch-ua-mobile": "?0",
-      // "sec-ch-ua-platform": "\"Windows\"",
-    };
-  }
-
   @override
   void initState() {
     super.initState();
@@ -161,29 +141,112 @@ class _MyTestHomePageState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // implement build component
-    // return ListView(
-    //   children: [
-    //     Center(
-    //       child: Column(
-    //         mainAxisAlignment: MainAxisAlignment.center,
-    //         children: [
-    //           ElevatedButton(
-    //               onPressed: () {
-    //                 // changeData(!checked ? "checked" : "uncheck", !checked);
-    //                 loadHttp();
-    //               },
-    //               child: Text(
-    //                 "text=$demoText checked=$checked",
-    //               )),
-    //           CutterView(),
-    //           Text("$content")
-    //         ],
-    //       ),
-    //     ),
-    //   ],
-    // );
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Text("图片列表", style: Theme.of(context).textTheme.titleLarge),
+          Expanded(child: getList()),
+        ],
+      ),
+    );
+  }
+}
 
-    return getList();
+Map<String, String> httpHeaders() {
+  return const {
+    "dnt": "1",
+    "method": "GET",
+    "pragma": "no-cache",
+    "cache-control": "no-cache",
+    "priority": "u=1, i",
+    "referer": "https://meirentu.cc/",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7",
+    "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    // "sec-fetch-dest": "image",
+    // "sec-fetch-mode": "no-cors",
+    // "sec-fetch-site": "cross-site",
+    // "sec-ch-ua":
+    //     "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+    // "sec-ch-ua-mobile": "?0",
+    // "sec-ch-ua-platform": "\"Windows\"",
+  };
+}
+
+Widget loadImage(String src2) {
+  // loadImageNet(src2);
+  return CachedNetworkImage(
+    // imageUrl: "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1qfLPZ.img?w=584&h=328&m=6",
+    imageUrl: src2,
+    // width: 300,
+    // height: 400,
+    httpHeaders: httpHeaders(),
+  );
+}
+
+class DetailPage extends ConsumerStatefulWidget {
+  final String imageUrl;
+  const DetailPage({super.key, required this.imageUrl});
+
+  @override
+  ConsumerState<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends ConsumerState<DetailPage> {
+  Future<void> _loadData() async {
+    var res = await http.get(Uri.parse("https://meirentu.cc${widget.imageUrl}"));
+    print("res ${res.statusCode} ${res.toString()}");
+    if (res.statusCode == 200) {
+      var doc = parseHtml(res.body);
+      var detailImages = await parseDetailImage(doc);
+      if (!mounted) return;
+      setState(() {
+        dataSet = detailImages;
+      });
+    } else {
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => const AlertDialog(content: Text("load data not success")),
+        );
+      }
+    }
+  }
+
+  List<ImageData>? dataSet;
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (dataSet != null) {
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth < 400) {
+            return ListView.builder(
+              itemCount: dataSet?.length,
+              itemBuilder: (context, idx) {
+                return loadImage(dataSet![idx].src!);
+              },
+            );
+          } else {
+            return GridView.builder(
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 300, childAspectRatio: 0.7, mainAxisSpacing: 0, crossAxisSpacing: 0),
+              itemBuilder: (context, idx) {
+                return loadImage(dataSet![idx].src!);
+              },
+            );
+          }
+        },
+      );
+    } else {
+      return Text("Loading", style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white));
+    }
   }
 }

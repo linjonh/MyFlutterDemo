@@ -245,7 +245,7 @@ Future<void> runIsolate() async {
   print("result =$result");
 }
 
-loadHttp() async {
+Future<void> loadHttp() async {
   try {
     var url = Uri.parse("https://meirentu.cc/");
 

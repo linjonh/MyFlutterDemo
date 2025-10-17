@@ -27,10 +27,14 @@ DataRepository getMyDataList(Ref ref) {
 }
 
 void main() {
-  runApp(const ProviderScope(
-    // child: MyApp(),
-    child: MyTestApp(title: "test",),
-  ));
+  runApp(
+    ProviderScope(
+      // child: MyApp(),
+      child: MaterialApp(
+        home: MyTestApp(title: "test"),
+      ),
+    ),
+  );
 }
 
 class MyApp extends ConsumerWidget {
@@ -40,9 +44,10 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final String value = ref.watch(hellWorldProvider);
     return MaterialApp(
-        title: value,
-        theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), useMaterial3: true),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'));
+      title: value,
+      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), useMaterial3: true),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
   }
 }
 
@@ -96,37 +101,30 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with ClipboardListener 
 
   @override
   Widget build(BuildContext context) {
-    var list2 = <Widget>[
-      const Text('You have pushed the button this many times:'),
-      Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-    ];
+    var list2 = <Widget>[const Text('You have pushed the button this many times:'), Text('$_counter', style: Theme.of(context).textTheme.headlineMedium)];
     var list = dataSet?.map((item) => Text("${item.name} ${item.address} ${item.sex}")).toList();
     list2.addAll(list ?? []);
     return Scaffold(
-        appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary, title: Text(widget.title)),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Column(mainAxisAlignment: MainAxisAlignment.center, children: list2),
-              ElevatedButton(onPressed: pullDataAction, style: const ButtonStyle(), child: const Text("pullData")),
-              ElevatedButton(onPressed: jumpToSecond, child: const Text("Navi to second page")),
-              const MyWidget(),
-            ],
-          ),
+      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary, title: Text(widget.title)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Column(mainAxisAlignment: MainAxisAlignment.center, children: list2),
+            ElevatedButton(onPressed: pullDataAction, style: const ButtonStyle(), child: const Text("pullData")),
+            ElevatedButton(onPressed: jumpToSecond, child: const Text("Navi to second page")),
+            const MyWidget(),
+          ],
         ),
-        floatingActionButton: FloatingActionButton(onPressed: _incrementCounter, tooltip: 'Increment', child: const Icon(Icons.add)));
+      ),
+      floatingActionButton: FloatingActionButton(onPressed: _incrementCounter, tooltip: 'Increment', child: const Icon(Icons.add)),
+    );
   }
 
   ///跳转至第二页面
   void jumpToSecond() {
-    MyNavi.navigateTo(
-        context,
-        pd.ChangeNotifierProvider(
-          create: (context) => CartModel(),
-          child: const SecondPage(),
-        ));
+    MyNavi.navigateTo(context, pd.ChangeNotifierProvider(create: (context) => CartModel(), child: const SecondPage()));
   }
 
   ///

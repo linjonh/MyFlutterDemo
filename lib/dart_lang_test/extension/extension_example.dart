@@ -22,7 +22,7 @@ class MyFamily<T> {
   T? type;
   MyFamily(this.type);
   void showType() {
-    print(this.type);
+    print(type);
   }
 }
 
